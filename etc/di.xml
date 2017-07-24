@@ -6,4 +6,37 @@
         <plugin name="before_404" type="Ethos\Track404\Model\Plugin\before404"/>
     </type>
 
+
+   <virtualType name="url404GridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Ethos\Track404\Model\ResourceModel\Url404\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">url404GridFilterPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="url404GridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="url404_admin_listing_data_source" xsi:type="string">Ethos\Track404\Model\ResourceModel\Url404\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Ethos\Track404\Model\ResourceModel\Url404\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">ethos_track404</argument>
+            <argument name="resourceModel" xsi:type="string">Ethos\Track404\Model\ResourceModel\Url404</argument>
+        </arguments>
+    </virtualType>
+
+
 </config>

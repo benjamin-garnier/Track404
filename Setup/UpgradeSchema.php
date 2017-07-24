@@ -42,15 +42,23 @@ class UpgradeSchema implements UpgradeSchemaInterface
 
         $this->_log->info("[UpgradeSchema/upgrade] : start, version =". $context->getVersion());
         if (version_compare($context->getVersion(), '0.2.0', '<')) {
-            if (!$setup->getConnection()->isTableExists($setup->getTable('ethos_url_noroute'))) {
+            if (!$setup->getConnection()->isTableExists($setup->getTable('ethos_track404'))) {
                 $table = $setup->getConnection()
-                    ->newTable($setup->getTable('ethos_url_noroute'))
+                    ->newTable($setup->getTable('ethos_track404'))
+                    ->addColumn(
+                        'id',
+                        \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                        null,
+                        ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
+                        'url ID'
+                    )
                     ->addColumn(
                         'url',
                         \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                         255,
-                        ['nullable' => false, 'primary' => true],
+                        ['nullable' => false],
                         'url'
+
                     )
                     ->addColumn(
                         'count',
@@ -85,7 +93,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     ->setOption('charset', 'utf8');
 
                 $setup->getConnection()->createTable($table);
-            } else  $this->_log->info("[InstallSchema/install] : Table [ethos_url_noroute] already exists in database");
+            } else  $this->_log->info("[InstallSchema/install] : Table [ethos_track404] already exists in database");
         }
         $setup->endSetup();
         $this->_log->info("[InstallSchema/install] : finish");

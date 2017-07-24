@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Ethos_Track404" title="Ethos" module="Ethos_Track404" sortOrder="20" dependsOnModule="Ethos_Track404" resource="Ethos_Track404::url404"/>
+        <add id="Ethos_Track404::index" title="Track404" module="Ethos_Track404" action="url404/admin/index" parent="Ethos_Track404" sortOrder="20" dependsOnModule="Ethos_Track404" resource="Ethos_Track404::url404"/>
+    </menu>
+</config>

@@ -47,7 +47,7 @@ class before404 extends AbstractModel
             $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
             $resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
             $connection = $resource->getConnection();
-            $tableName = $resource->getTableName('ethos_url_noroute'); //gives table name with prefix
+            $tableName = $resource->getTableName('ethos_track404'); //gives table name with prefix
 
             //Select Data from table
             $sql = "Select * FROM " . $tableName . " Where url='$actual_link'";

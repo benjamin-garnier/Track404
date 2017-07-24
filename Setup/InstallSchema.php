@@ -36,17 +36,24 @@ class InstallSchema implements InstallSchemaInterface
 
         $setup->startSetup();
         /**
-         * Create table 'ethos_url_noroute'
+         * Create table 'ethos_track404'
          */
 
-        if (!$setup->getConnection()->isTableExists($setup->getTable('ethos_url_noroute'))) {
+        try {
             $table = $setup->getConnection()
-                ->newTable($setup->getTable('ethos_url_noroute'))
+                ->newTable($setup->getTable('ethos_track404'))
+                ->addColumn(
+                    'id',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    null,
+                    ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
+                    'url ID'
+                )
                 ->addColumn(
                     'url',
                     \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                     255,
-                    ['nullable' => false, 'primary' => true],
+                    ['nullable' => false],
                     'url'
 
                 )
@@ -75,7 +82,7 @@ class InstallSchema implements InstallSchemaInterface
                     'referer',
                     \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                     255,
-                    ['nullable' => false],
+                    ['nullable' => true],
                     'source of the wrong url'
                 )
                 ->setComment('Ethos url no route Table')
@@ -83,7 +90,9 @@ class InstallSchema implements InstallSchemaInterface
                 ->setOption('charset', 'utf8');
 
             $setup->getConnection()->createTable($table);
-        } else  $this->_log->info("[InstallSchema/install] : Table [ethos_url_noroute] already exists in database");
+        } catch (exception $e) {
+            $this->_log->info("[InstallSchema/install] : Table [ethos_track404] => .$e");
+        }
 
         $setup->endSetup();
         $this->_log->info("[InstallSchema/install] : finish");

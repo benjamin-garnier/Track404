@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <!-- main part of the grid -->
+    <argument name="data" xsi:type="array">
+        <!-- define where to find the date source -->
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">url404_admin_listing.url404_admin_listing_data_source</item>
+            <item name="deps" xsi:type="string">url404_admin_listing.url404_admin_listing_data_source</item>
+        </item>
+        <!-- define where to find the columns -->
+        <item name="spinner" xsi:type="string">url404_admin_columns</item>
+    </argument>
+
+    <!-- define the date source (must be the same than in argument/item/provider and argument/js_config/deps -->
+    <dataSource name="url404_admin_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <!-- unique name for the grid -->
+            <argument name="class" xsi:type="string">url404GridDataProvider</argument>
+            <!-- name of the data source same as in argument/js_config/provider -->
+            <argument name="name" xsi:type="string">url404_admin_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="indexField" xsi:type="string">url404_admin</item>
+                    </item>
+                </item>
+            </argument>
+        </argument>
+    </dataSource>
+
+    <!-- define the columns of my grid -->
+    <columns name="url404_admin_columns">
+        <!--
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <!- - Bookmarks behaviour - ->
+                        <item name="storageConfig" xsi:type="array">
+                            <item name="provider" xsi:type="string">url404_admin_listing.url404_admin_listing.listing_top.bookmarks</item>
+                            <item name="namespace" xsi:type="string">current</item>
+                        </item>
+                        <item name="childDefaults" xsi:type="array">
+                            <item name="controlVisibility" xsi:type="boolean">true</item>
+                            <item name="storageConfig" xsi:type="array">
+                                <item name="provider" xsi:type="string">url404_admin_listing.url404_admin_listing.listing_top.bookmarks</item>
+                                <item name="root" xsi:type="string">columns.${ $.index }</item>
+                                <item name="namespace" xsi:type="string">current.${ $.storageConfig.root}</item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+         -->
+        <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <!-- define which field will be used as ID -->
+                    <item name="indexField" xsi:type="string">id</item>
+                </item>
+            </argument>
+        </selectionsColumn>
+
+        <!-- Column id -->
+        <column name="id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="label" xsi:type="string" translate="true">ID</item>
+                </item>
+            </argument>
+        </column>
+
+        <!-- Column url -->
+        <column name="url">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">url404</item>
+                    <item name="dataScope" xsi:type="string">url</item>
+                    <item name="label" xsi:type="string" translate="true">Url</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </column>
+
+        <!-- Column count -->
+        <column name="count">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">url404</item>
+                    <item name="dataScope" xsi:type="string">count</item>
+                    <item name="label" xsi:type="string" translate="true">Count</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </column>
+        <!-- Column date_first_time -->
+        <column name="date_first_time">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">url404</item>
+                    <item name="dataScope" xsi:type="string">date_first_time</item>
+                    <item name="label" xsi:type="string" translate="true">date_first_time</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </column>
+        <!-- Column date_last_time -->
+        <column name="date_last_time">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">url404</item>
+                    <item name="dataScope" xsi:type="string">date_last_time</item>
+                    <item name="label" xsi:type="string" translate="true">date_last_time</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </column>
+        <!-- Column referer -->
+        <column name="referer">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">url404</item>
+                    <item name="dataScope" xsi:type="string">referer</item>
+                    <item name="label" xsi:type="string" translate="true">referer</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </column>
+    </columns>
+</listing>
