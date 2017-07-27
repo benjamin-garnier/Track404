@@ -34,10 +34,15 @@ class UpgradeSchema implements UpgradeSchemaInterface
      */
     public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
-        $setup->startSetup();
+       $setup->startSetup();
+
+        /**
+         * Create table 'ethos_404_stats'
+         */
+
         $this->_log->info("[UpgradeSchema/upgrade] : start, version =". $context->getVersion());
-        
-        try {
+        try
+        {
             $table = $setup->getConnection()
                 ->newTable($setup->getTable('ethos_track404'))
                 ->addColumn(
@@ -79,18 +84,20 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     'referer',
                     \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                     255,
-                    ['nullable' => true],
+                    ['nullable' => false],
                     'source of the wrong url'
                 )
                 ->setComment('Ethos url no route Table')
                 ->setOption('type', 'InnoDB')
                 ->setOption('charset', 'utf8');
+
             $setup->getConnection()->createTable($table);
-        } catch (exception $e) {
-            $this->_log->info("[InstallSchema/install] : Table [ethos_track404] => .$e");
         }
-        
+        catch (exception $e)
+        { 
+            $this->_log->info("[UpgradeSchema/upgrade] : Table [ethos_track404] already exists in database");
+        }
         $setup->endSetup();
-        $this->_log->info("[InstallSchema/install] : finish");
+        $this->_log->info("[UpgradeSchema/install] : finish");
     }
 }
