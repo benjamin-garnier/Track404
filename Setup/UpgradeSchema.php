@@ -34,70 +34,69 @@ class UpgradeSchema implements UpgradeSchemaInterface
      */
     public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
-       $setup->startSetup();
+        $setup->startSetup();
 
         /**
          * Create table 'ethos_404_stats'
          */
 
         $this->_log->info("[UpgradeSchema/upgrade] : start, version =". $context->getVersion());
-        try
-        {
-            $table = $setup->getConnection()
-                ->newTable($setup->getTable('ethos_track404'))
-                ->addColumn(
-                    'id',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
-                    null,
-                    ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
-                    'url ID'
-                )
-                ->addColumn(
-                    'url',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                    255,
-                    ['nullable' => false],
-                    'url'
-                )
-                ->addColumn(
-                    'count',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
-                    null,
-                    ['nullable' => false],
-                    'Name'
-                )
-                ->addColumn(
-                    'date_first_time',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                    255,
-                    ['nullable' => false],
-                    'first time url was called'
-                )
-                ->addColumn(
-                    'date_last_time',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                    255,
-                    ['nullable' => false],
-                    'last time url was called'
-                )
-                ->addColumn(
-                    'referer',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                    255,
-                    ['nullable' => false],
-                    'source of the wrong url'
-                )
-                ->setComment('Ethos url no route Table')
-                ->setOption('type', 'InnoDB')
-                ->setOption('charset', 'utf8');
+        if (version_compare($context->getVersion(), '0.2.0', '<')) {
+            if (!$setup->getConnection()->isTableExists($setup->getTable('ethos_track404'))) {
+                $table = $setup->getConnection()
+                    ->newTable($setup->getTable('ethos_track404'))
+                    ->addColumn(
+                        'id',
+                        \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                        null,
+                        ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
+                        'url ID'
+                    )
+                    ->addColumn(
+                        'url',
+                        \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        255,
+                        ['nullable' => false],
+                        'url'
 
-            $setup->getConnection()->createTable($table);
-        }
-        catch (exception $e)
-        { 
-            $this->_log->info("[UpgradeSchema/upgrade] : Table [ethos_track404] already exists in database");
+                    )
+                    ->addColumn(
+                        'count',
+                        \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                        null,
+                        ['nullable' => false],
+                        'Name'
+                    )
+                    ->addColumn(
+                        'date_first_time',
+                        \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        255,
+                        ['nullable' => false],
+                        'first time url was called'
+                    )
+                    ->addColumn(
+                        'date_last_time',
+                        \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        255,
+                        ['nullable' => false],
+                        'last time url was called'
+                    )
+                    ->addColumn(
+                        'referer',
+                        \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        255,
+                        ['nullable' => false],
+                        'source of the wrong url'
+                    )
+                    ->setComment('Ethos url no route Table')
+                    ->setOption('type', 'InnoDB')
+                    ->setOption('charset', 'utf8');
+
+                $setup->getConnection()->createTable($table);
+            } else  $this->_log->info("[InstallSchema/install] : Table [ethos_track404] already exists in database");
         }
         $setup->endSetup();
-        $this->_log->info("[UpgradeSchema/install] : finish");
+        $this->_log->info("[InstallSchema/install] : finish");
+
     }
 }

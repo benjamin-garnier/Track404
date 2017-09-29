@@ -14,7 +14,7 @@ class Logs extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * @param object $array
      */
-    public function info($array, $_file = "test404_infos.log")
+    public function info($array, $_file = "track404_infos.log")
     {
         $writer = new \Zend\Log\Writer\Stream(BP . "/var/log/" . $_file);
         $logger = new \Zend\Log\Logger();
